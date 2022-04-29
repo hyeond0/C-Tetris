@@ -4,25 +4,23 @@
 
 using namespace std;
 
-#define MAPWIDTH    15 // ¸Ê Row Å©±â ÁöÁ¤, ¾çÂÊ º®ÀÌ ÀÖÀ¸¹Ç·Î ÃÖÁ¾ÀûÀ¸·Î´Â Row + 2
-#define MAPHEIGHT   30 // ¸Ê Col Å©±â ÁöÁ¤, ¸Ç ¾Æ·¡ º®ÀÌ ÀÖÀ¸¹Ç·Î ÃÖÁ¾ÀûÀ¸·Î´Â Col + 1
-
-// ºí·ÏÀº 1, ºó °ø°£Àº 0, º®Àº 2
+#define MAPWIDTH    15 // ë§µ Row í¬ê¸° ì§€ì •, ì–‘ìª½ ë²½ì´ ìˆìœ¼ë¯€ë¡œ ìµœì¢…ì ìœ¼ë¡œëŠ” Row + 2
+#define MAPHEIGHT   30 // ë§µ Col í¬ê¸° ì§€ì •, ë§¨ ì•„ë˜ ë²½ì´ ìˆìœ¼ë¯€ë¡œ ìµœì¢…ì ìœ¼ë¡œëŠ” Col + 1
 
 
-typedef struct _currentPosition // ºí·Ï ÁÂÇ¥ Á¦¾î¸¦ À§ÇÑ ±¸Á¶Ã¼ ÀÚ·áÇü ¼±¾ğ
+typedef struct _currentPosition // ë¸”ë¡ ì¢Œí‘œ ì œì–´ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´ ìë£Œí˜• ì„ ì–¸
 {
     int X;
     int Y;
 } Position;
 
-void PositionInit(Position* BlockPos) // ºí·Ï ÁÂÇ¥ ÃÊ±â°ª ÁöÁ¤
+void PositionInit(Position* BlockPos) // ë¸”ë¡ ì¢Œí‘œ ì´ˆê¸°ê°’ ì§€ì •
 {
     BlockPos->X = 5;
     BlockPos->Y = 0;
 }
 
-void ConsoleInit() // ÄÜ¼Ö Ä¿¼­ ¼û±è ¼³Á¤ ¹× ÄÜ¼Ö Ã¢ Å©±â ÁöÁ¤
+void ConsoleInit() // ì½˜ì†” ì»¤ì„œ ìˆ¨ê¹€ ì„¤ì • ë° ì½˜ì†” ì°½ í¬ê¸° ì§€ì •
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO info;
@@ -30,9 +28,9 @@ void ConsoleInit() // ÄÜ¼Ö Ä¿¼­ ¼û±è ¼³Á¤ ¹× ÄÜ¼Ö Ã¢ Å©±â ÁöÁ¤
     info.bVisible = FALSE;
     SetConsoleCursorInfo(consoleHandle, &info);
 
-    system("mode con cols=100 lines=40"); // ÄÜ¼Ö Ã¢ Å©±â ÁöÁ¤
+    system("mode con cols=100 lines=40"); // ì½˜ì†” ì°½ í¬ê¸° ì§€ì •
 }
-void gotoxy(int x, int y) // Ä¿¼­ ÁÂÇ¥ ÀÌµ¿ ÇÔ¼ö
+void gotoxy(int x, int y) // ì»¤ì„œ ì¢Œí‘œ ì´ë™ í•¨ìˆ˜
 {
     COORD pos = { x,y };
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
@@ -69,16 +67,16 @@ public:
             system("cls");
             CreateLogo();
             gotoxy(22, 17);
-            cout << "======================= 1. ½ÃÀÛ =======================" << endl;
+            cout << "======================= 1. ì‹œì‘ =======================" << endl;
             gotoxy(22, 18);
-            cout << "======================= 2. Á¾·á =======================" << endl;
+            cout << "======================= 2. ì¢…ë£Œ =======================" << endl;
 
             gotoxy(22, 22);
-            cout << "¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä : ";
+            cout << "ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš” : ";
             int iInput = InputInt();
             if (iInput < MENU_START || iInput >= MENU_NONE)
             {
-                cout << "´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä." << endl;
+                cout << "ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”." << endl;
                 system("pause");
                 continue;
             }
@@ -88,7 +86,7 @@ public:
     }
 
 private:
-    void CreateLogo() // Tetris Ãâ·Â
+    void CreateLogo() // Tetris ì¶œë ¥
     {
         gotoxy(20, 7);
         cout << "    ######    ###     ######   ###      ###       ##     " << endl;
@@ -188,7 +186,7 @@ public:
         {0,0,0,0,0}
     };
 
-    void DrawNextBlock(int blockShape[5][5]) // ´ÙÀ½ ºí·Ï Ãâ·Â
+    void DrawNextBlock(int blockShape[5][5]) // ë‹¤ìŒ ë¸”ë¡ ì¶œë ¥
     {
         for (int i = 0; i < 6; i++)
         {
@@ -204,7 +202,7 @@ public:
             for (int i = 0; i < 4; i++)
             {
                 gotoxy(62, 8 + i);
-                cout << "¡á";
+                cout << "â– ";
             }
             break;
         case BlockO:
@@ -212,45 +210,45 @@ public:
                 for (int j = 0; j < 2; j++)
                 {
                     gotoxy(61 + j * 2, 8 + i);
-                    cout << "¡á";
+                    cout << "â– ";
                 }
             break;
         case BlockT:
             for (int j = 0; j <= 2; j++)
             {
                 gotoxy(60 + j * 2, 8);
-                cout << "¡á";
+                cout << "â– ";
             }
             gotoxy(62, 9);
-            cout << "¡á";
+            cout << "â– ";
             break;
         case BlockZ:
             for (int j = 0; j < 2; j++)
             {
                 gotoxy(61 + j * 2, 9);
-                cout << "¡á";
+                cout << "â– ";
                 gotoxy(61 + j * 2 + 2, 10);
-                cout << "¡á";
+                cout << "â– ";
             }
             break;
         case BlockS:
             for (int j = 0; j < 2; j++)
             {
                 gotoxy(63 + j * 2, 9);
-                cout << "¡á";
+                cout << "â– ";
                 gotoxy(63 + j * 2 - 2, 10);
-                cout << "¡á";
+                cout << "â– ";
             }
             break;
         case BlockL:
             for (int i = 0; i < 3; i++)
             {
                 gotoxy(61, 8 + i);
-                cout << "¡á";
+                cout << "â– ";
                 if (i == 2)
                 {
                     gotoxy(63, 8 + i);
-                    cout << "¡á";
+                    cout << "â– ";
                 }
             }
             break;
@@ -258,11 +256,11 @@ public:
             for (int i = 0; i < 3; i++)
             {
                 gotoxy(63, 8 + i);
-                cout << "¡á";
+                cout << "â– ";
                 if (i == 2)
                 {
                     gotoxy(61, 8 + i);
-                    cout << "¡á";
+                    cout << "â– ";
                 }
             }
             break;
@@ -270,10 +268,10 @@ public:
             break;
         }
     }
-    void SetBlock(int blockShape[5][5]) // ÇöÀç ºí·Ï, ´ÙÀ½ ºí·Ï Á¦¾î
+    void SetBlock(int blockShape[5][5]) // í˜„ì¬ ë¸”ë¡, ë‹¤ìŒ ë¸”ë¡ ì œì–´
     {
         srand((unsigned int)(time(NULL)));
-        switch (rand() % 7) { // switch¹®À¸·Î ºí·° ÃßÃâ ÈÄ Blockshape¿¡ ÀúÀå
+        switch (rand() % 7) { // switchë¬¸ìœ¼ë¡œ ë¸”ëŸ­ ì¶”ì¶œ í›„ Blockshapeì— ì €ì¥
 
         case 0:
             for (int i = 0; i < 5; i++)
@@ -324,7 +322,7 @@ public:
 
     void LimitBottom(int blockShape[5][5], int BottomArray[], int* BottomRow)
     {
-        // °¢ ¿­¸¶´Ù °¡Àå ¾Æ·¡¿¡ ÀÖ´Â ÇàÀ» BottomArray¿¡ ÀúÀåÇÏ°í, ±× ¿­Àº BottomRow¿¡ ÀúÀåÇÑ´Ù.
+        // ê° ì—´ë§ˆë‹¤ ê°€ì¥ ì•„ë˜ì— ìˆëŠ” í–‰ì„ BottomArrayì— ì €ì¥í•˜ê³ , ê·¸ ì—´ì€ BottomRowì— ì €ì¥í•œë‹¤.
         for (int i = 0; i <= 4; i++)
         {
             for (int j = 0; j <= 4; j++)
@@ -341,7 +339,7 @@ public:
 
     int LimitLeft(int blockShape[5][5], int i, int LeftArray[], int* LeftRow, int* LeftCol)
     {
-        // °¢ Çà¸¶´Ù °¡Àå ¿ŞÂÊ¿¡ ÀÖ´Â ¿­À» LeftArray¿¡ ÀúÀåÇÏ°í, LeftColÀº °¡Àå ¿ŞÂÊ¿¡ ÀÖ´Â ºí·°ÀÇ ¿­, LeftRow´Â °¡Àå ¿ŞÂÊ¿¡ ÀÖ´Â ºí·°ÀÇ ÇàÀÌ´Ù.
+        // ê° í–‰ë§ˆë‹¤ ê°€ì¥ ì™¼ìª½ì— ìˆëŠ” ì—´ì„ LeftArrayì— ì €ì¥í•˜ê³ , LeftColì€ ê°€ì¥ ì™¼ìª½ì— ìˆëŠ” ë¸”ëŸ­ì˜ ì—´, LeftRowëŠ” ê°€ì¥ ì™¼ìª½ì— ìˆëŠ” ë¸”ëŸ­ì˜ í–‰ì´ë‹¤.
         for (int j = 4; j >= 0; j--)
         {
             if (blockShape[i][j] == 1)
@@ -381,7 +379,7 @@ class CMap
 public:
     CBlock Block;
 
-    void InitMap(char map[MAPHEIGHT][MAPWIDTH]) // ¸Ê ÃÊ±âÈ­
+    void InitMap(char map[MAPHEIGHT][MAPWIDTH]) // ë§µ ì´ˆê¸°í™”
     {
         for (int i = 0; i < MAPHEIGHT; i++)
         {
@@ -390,10 +388,10 @@ public:
         }
     }
 
-    void DrawMap(char map[MAPHEIGHT][MAPWIDTH]) // ¸Ê »ı¼º
+    void DrawMap(char map[MAPHEIGHT][MAPWIDTH]) // ë§µ ìƒì„±
     {
 
-        // 1. 30x15 ¸ÊÀ» ¿¡¿ö½Î´Â Æ² »ı¼º ¹× Ãâ·Â
+        // 1. 30x15 ë§µì„ ì—ì›Œì‹¸ëŠ” í‹€ ìƒì„± ë° ì¶œë ¥
 
         gotoxy(10, 5);
         for (int i = 0; i <= MAPHEIGHT; i++)
@@ -402,11 +400,11 @@ public:
             {
                 gotoxy(10 + j * 2, 5 + i);
                 if (j == MAPWIDTH + 1 || j == 0 || i == MAPHEIGHT)
-                    cout << "¢Ì";
+                    cout << "â–©";
             }
         }
 
-        // 2. Æ² ¾È¿¡ 30x15 ¸Ê »ı¼º ¹× Ãâ·Â
+        // 2. í‹€ ì•ˆì— 30x15 ë§µ ìƒì„± ë° ì¶œë ¥
 
         gotoxy(12, 5);
         for (int i = 0; i < MAPHEIGHT; i++)
@@ -417,13 +415,13 @@ public:
                 if (map[i][j] == '0')
                     cout << "  ";
                 else if (map[i][j] == '1')
-                    cout << "¡á";
+                    cout << "â– ";
             }
             cout << endl;
         }
     }
 
-    void DrawSubMap(int best, int score) // ¼­ºê¸Ê (´ÙÀ½ ºí·Ï, Á¡¼öÄ­) »ı¼º
+    void DrawSubMap(int best, int score) // ì„œë¸Œë§µ (ë‹¤ìŒ ë¸”ë¡, ì ìˆ˜ì¹¸) ìƒì„±
     {
 
         gotoxy(61, 6);
@@ -434,7 +432,7 @@ public:
             {
                 gotoxy(55 + j * 2, 6 + i);
                 if (j == 7 || j == 0 || i == 7)
-                    cout << "¢Ì";
+                    cout << "â–©";
             }
         }
 
@@ -446,7 +444,7 @@ public:
             {
                 gotoxy(55 + j * 2, 18 + i);
                 if (j == 0 || j == 7 || i == 4)
-                    cout << "¢Ì";
+                    cout << "â–©";
             }
         }
 
@@ -467,7 +465,7 @@ public:
         {
             for (int j = 0; j < 5; j++)
             {
-                if (blockShape[i][j] == 1) // ºí·ÏÀÌ¸é 
+                if (blockShape[i][j] == 1) // ë¸”ë¡ì´ë©´ 
                     Map[BlockPos->Y + i][BlockPos->X + j] = '0';
             }
         }
@@ -508,7 +506,7 @@ public:
                         }
                         height--;
                     }
-                    i++; // ÇÑ ÁÙ¾¿ ´Ù ³»·ÈÀ¸¹Ç·Î ´Ù½Ã ±× ÁÙºÎÅÍ Ã¼Å©
+                    i++; // í•œ ì¤„ì”© ë‹¤ ë‚´ë ¸ìœ¼ë¯€ë¡œ ë‹¤ì‹œ ê·¸ ì¤„ë¶€í„° ì²´í¬
                 }
             }
             count = 0;
@@ -526,9 +524,9 @@ public:
 
 
 
-    void OutputBlock(char Map[MAPHEIGHT][MAPWIDTH], int blockShape[5][5], Position BlockPos) // ºí·Ï Ãâ·Â : 2Â÷¿ø ¹è¿­ Map¿¡ Ç¥Çö
+    void OutputBlock(char Map[MAPHEIGHT][MAPWIDTH], int blockShape[5][5], Position BlockPos) // ë¸”ë¡ ì¶œë ¥ : 2ì°¨ì› ë°°ì—´ Mapì— í‘œí˜„
     {
-        // ºí·° ¸ğ¾ç¿¡ ÇØ´çÇÏ´Â ÁÂÇ¥¸¦ Map»óÀÇ ÁÂÇ¥¿¡ »Ñ·ÁÁÜ ('1' ºÎ¿©)
+        // ë¸”ëŸ­ ëª¨ì–‘ì— í•´ë‹¹í•˜ëŠ” ì¢Œí‘œë¥¼ Mapìƒì˜ ì¢Œí‘œì— ë¿Œë ¤ì¤Œ ('1' ë¶€ì—¬)
         for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < 5; j++)
@@ -541,18 +539,18 @@ public:
 
     bool GoDown(char Map[MAPHEIGHT][MAPWIDTH], int blockShape[5][5], Position* BlockPos)
     {
-        int BottomArray[5] = {}; // °¢ ¿­¸¶´Ù Á¦ÀÏ ¾Æ·¡¿¡ ÀÖ´Â ÇàÀ» ÀúÀåÇÏ´Â ¹è¿­
-        int BottomRow = 0; // Á¦ÀÏ ¾Æ·¡ÀÇ Çà
+        int BottomArray[5] = {}; // ê° ì—´ë§ˆë‹¤ ì œì¼ ì•„ë˜ì— ìˆëŠ” í–‰ì„ ì €ì¥í•˜ëŠ” ë°°ì—´
+        int BottomRow = 0; // ì œì¼ ì•„ë˜ì˜ í–‰
 
-        Block.LimitBottom(blockShape, BottomArray, &BottomRow); // botRow¿¡ ºí·°ÀÇ Á¦ÀÏ ¾Æ·¡ ÇàÀÌ ÀúÀå, Array´Â °¢ ¿­¿¡ ¸¶Áö¸· ÇàÀ» ÀúÀå
-        //Left, Right¿Í ´Ù¸£°Ô Array°¡ °¢ ÇàÀÌ ¾Æ´Ñ, °¢ ¿­À» ±âÁØÀ¸·Î ÀúÀåµÆ´Ù.
-        //ºí·Ï Á¦ÀÏ ¾Æ·§ºÎºĞÀÇ yÁÂÇ¥°¡ blocky¿¡ ÀúÀå, °¢ xÃà¿¡ °¡Àå ¾Æ·§ºÎºĞÀÌ bottomArray¿¡ ÀúÀå
+        Block.LimitBottom(blockShape, BottomArray, &BottomRow); // botRowì— ë¸”ëŸ­ì˜ ì œì¼ ì•„ë˜ í–‰ì´ ì €ì¥, ArrayëŠ” ê° ì—´ì— ë§ˆì§€ë§‰ í–‰ì„ ì €ì¥
+        //Left, Rightì™€ ë‹¤ë¥´ê²Œ Arrayê°€ ê° í–‰ì´ ì•„ë‹Œ, ê° ì—´ì„ ê¸°ì¤€ìœ¼ë¡œ ì €ì¥ëë‹¤.
+        //ë¸”ë¡ ì œì¼ ì•„ë«ë¶€ë¶„ì˜ yì¢Œí‘œê°€ blockyì— ì €ì¥, ê° xì¶•ì— ê°€ì¥ ì•„ë«ë¶€ë¶„ì´ bottomArrayì— ì €ì¥
         for (int i = 0; i <= 4; i++)
         {
             if (BottomArray[i] != 0)
             {
                 if (Map[(BlockPos->Y) + BottomArray[i] + 1][(BlockPos->X) + i] == '1' || (BlockPos->Y) + BottomRow + 1 == MAPHEIGHT)
-                { // °¢ ¿­ÀÇ Á¦ÀÏ ¾Æ·¡ ºí·Ï ÇÑ Ä­ ¾Æ·¡¿¡ ºí·ÏÀÌ ÀÖ°Å³ª ÇÑÄ­ ¾Æ·¡°¡ º®ÀÏ °æ¿ì, true¸¦ ¹İÈ¯ÇÏ¿© ¹Ù´Ú¿¡ ´ê¾Ò´Ù´Â °ÍÀ» ¾Ë·ÁÁØ´Ù.
+                { // ê° ì—´ì˜ ì œì¼ ì•„ë˜ ë¸”ë¡ í•œ ì¹¸ ì•„ë˜ì— ë¸”ë¡ì´ ìˆê±°ë‚˜ í•œì¹¸ ì•„ë˜ê°€ ë²½ì¼ ê²½ìš°, trueë¥¼ ë°˜í™˜í•˜ì—¬ ë°”ë‹¥ì— ë‹¿ì•˜ë‹¤ëŠ” ê²ƒì„ ì•Œë ¤ì¤€ë‹¤.
                     return true;
                 }
             }
@@ -560,7 +558,7 @@ public:
         RemoveShape(Map, blockShape, BlockPos);
         Sleep(80);
         (BlockPos->Y)++;
-        return false; // ´êÁö ¾Ê¾ÒÀ¸¸é ºí·ÏÀ» ÇÑ Ä­ ¾Æ·¡·Î ³»¸°´Ù.
+        return false; // ë‹¿ì§€ ì•Šì•˜ìœ¼ë©´ ë¸”ë¡ì„ í•œ ì¹¸ ì•„ë˜ë¡œ ë‚´ë¦°ë‹¤.
     }
 
     void GoLeft(char Map[MAPHEIGHT][MAPWIDTH], int blockShape[5][5], Position* BlockPos)
@@ -573,16 +571,16 @@ public:
         for (int i = 0; i <= 4; i++)
         {
             LeftArray[i] = Block.LimitLeft(blockShape, i, LeftArray, &LeftRow, &LeftCol);
-            // LeftArray´Â °¢ Çà¿¡ °¡Àå ¿ŞÂÊ¿¡ ÀÖ´Â ºí·ÏÀÇ ¿­À» ÀúÀåÇÏ°í, LeftRow´Â °¡Àå ¿ŞÂÊ¿¡ ÀÖ´Â ºí·ÏÀÇ ÇàÀ» ÀúÀåÇÑ´Ù.
+            // LeftArrayëŠ” ê° í–‰ì— ê°€ì¥ ì™¼ìª½ì— ìˆëŠ” ë¸”ë¡ì˜ ì—´ì„ ì €ì¥í•˜ê³ , LeftRowëŠ” ê°€ì¥ ì™¼ìª½ì— ìˆëŠ” ë¸”ë¡ì˜ í–‰ì„ ì €ì¥í•œë‹¤.
         }
 
-        if ((BlockPos->X) + LeftArray[LeftRow] - 1 < 0) // °¡Àå ¿ŞÂÊ¿¡ ÀÖ´Â ºí·°ÀÇ ÇÑ Ä­ ¿ŞÂÊÀÌ º®ÀÌ¸é ´õ ÀÌ»ó °¡Áö ¸øÇÏ°Ô false·Î ¹Ù²Û´Ù.
+        if ((BlockPos->X) + LeftArray[LeftRow] - 1 < 0) // ê°€ì¥ ì™¼ìª½ì— ìˆëŠ” ë¸”ëŸ­ì˜ í•œ ì¹¸ ì™¼ìª½ì´ ë²½ì´ë©´ ë” ì´ìƒ ê°€ì§€ ëª»í•˜ê²Œ falseë¡œ ë°”ê¾¼ë‹¤.
             goLeft = false;
         for (int j = 4; j >= 0; j--)
         {
             if (LeftArray[j] != 0)
             {
-                if (Map[(BlockPos->Y) + j][(BlockPos->X) + LeftArray[j] - 1] == '1') // °¢ ¿­¿¡ Á¦ÀÏ ¿ŞÂÊ¿¡ ÀÖ´Â ºí·° ÇÑ Ä­ ¿ŞÂÊ¿¡ ºí·ÏÀÌ ÀÖ´Ù¸é, ´õ ÀÌ»ó °¡Áö ¸øÇÏ°Ô false·Î ¹Ù²Û´Ù.
+                if (Map[(BlockPos->Y) + j][(BlockPos->X) + LeftArray[j] - 1] == '1') // ê° ì—´ì— ì œì¼ ì™¼ìª½ì— ìˆëŠ” ë¸”ëŸ­ í•œ ì¹¸ ì™¼ìª½ì— ë¸”ë¡ì´ ìˆë‹¤ë©´, ë” ì´ìƒ ê°€ì§€ ëª»í•˜ê²Œ falseë¡œ ë°”ê¾¼ë‹¤.
                 {
                     goLeft = false;
                 }
@@ -606,7 +604,7 @@ public:
         for (int i = 0; i <= 4; i++)
         {
             RightArray[i] = Block.LimitRight(blockShape, i, RightArray, &RightRow, &RightCol);
-            // Left¿Í °°Àº ¹æ½ÄÀ¸·Î µ¿ÀÛ.
+            // Leftì™€ ê°™ì€ ë°©ì‹ìœ¼ë¡œ ë™ì‘.
         }
 
         if ((BlockPos->X) + RightArray[RightRow] + 1 >= MAPWIDTH)
@@ -654,15 +652,15 @@ public:
 
         for (int i = 0; i < 5; i++)
         {
-            RightArray[i] = Block.LimitRight(temp_arr, i, RightArray, &RightRow, &RightCol); // ±× ÇàÀÇ Á¦ÀÏ ¿À¸¥ÂÊ¿¡ ÀÖ´Â ºí·°ÀÇ ¿­
-            LeftArray[i] = Block.LimitLeft(temp_arr, i, LeftArray, &LeftRow, &LeftCol); // ±× ÇàÀÇ Á¦ÀÏ ¿ŞÂÊ¿¡ ÀÖ´Â ºí·°ÀÇ ¿­
+            RightArray[i] = Block.LimitRight(temp_arr, i, RightArray, &RightRow, &RightCol); // ê·¸ í–‰ì˜ ì œì¼ ì˜¤ë¥¸ìª½ì— ìˆëŠ” ë¸”ëŸ­ì˜ ì—´
+            LeftArray[i] = Block.LimitLeft(temp_arr, i, LeftArray, &LeftRow, &LeftCol); // ê·¸ í–‰ì˜ ì œì¼ ì™¼ìª½ì— ìˆëŠ” ë¸”ëŸ­ì˜ ì—´
         }
 
         Block.LimitBottom(temp_arr, BottomArray, &BottomRow);
 
-        //////////////// ¿©±â±îÁö temp_arr¿¡ rotateµÈ ºí·ÏÀ» ÀúÀåÇÏ°í ¿Ş, ¿À, ¾Æ·¡ ¿­°ú ÇàÀ» ´Ù ÀúÀåÇÑ »óÅÂ //////////////////////////////
+        //////////////// ì—¬ê¸°ê¹Œì§€ temp_arrì— rotateëœ ë¸”ë¡ì„ ì €ì¥í•˜ê³  ì™¼, ì˜¤, ì•„ë˜ ì—´ê³¼ í–‰ì„ ë‹¤ ì €ì¥í•œ ìƒíƒœ //////////////////////////////
 
-        while ((BlockPos->X) + LeftArray[LeftRow] - 1 < 0) // ¹Ù²ï ¸ğ¾çÀÌ ¿ŞÂÊ º®¿¡ ´ê°Å³ª ÇÑ Ä­ ¿ŞÂÊ¿¡ ºí·°ÀÌ ÀÖÀ» ¶§
+        while ((BlockPos->X) + LeftArray[LeftRow] - 1 < 0) // ë°”ë€ ëª¨ì–‘ì´ ì™¼ìª½ ë²½ì— ë‹¿ê±°ë‚˜ í•œ ì¹¸ ì™¼ìª½ì— ë¸”ëŸ­ì´ ìˆì„ ë•Œ
         {
             if (rotate == false)
             {
@@ -672,7 +670,7 @@ public:
 
             for (int j = 0; j <= 4; j++)
             {
-                if (Map[(BlockPos->Y) + j][(BlockPos->X) + RightArray[j] + 1] != '1' && Map[(BlockPos->Y) + BottomArray[j] + 1][(BlockPos->X) + j] != '1') // ÇÑÄ­ ¿À¸¥ÂÊ¿¡µµ ºí·°ÀÌ ¾ø°í ¾Æ·¡µµ ¾øÀ¸¸é
+                if (Map[(BlockPos->Y) + j][(BlockPos->X) + RightArray[j] + 1] != '1' && Map[(BlockPos->Y) + BottomArray[j] + 1][(BlockPos->X) + j] != '1') // í•œì¹¸ ì˜¤ë¥¸ìª½ì—ë„ ë¸”ëŸ­ì´ ì—†ê³  ì•„ë˜ë„ ì—†ìœ¼ë©´
                     count++;
                 else
                 {
@@ -696,9 +694,9 @@ public:
             }
         }
 
-        //////////////////////////////////////////////////////////////////¤¡
+        //////////////////////////////////////////////////////////////////ã„±
 
-        while ((BlockPos->X) + RightArray[RightRow] + 1 >= MAPWIDTH) // ¿À¸¥ÂÊ º®¿¡ ´ê¾Ò°Å³ª  ¿À¸¥ÂÊ¿¡ ºí·°ÀÌ ÀÖÀ» ¶§
+        while ((BlockPos->X) + RightArray[RightRow] + 1 >= MAPWIDTH) // ì˜¤ë¥¸ìª½ ë²½ì— ë‹¿ì•˜ê±°ë‚˜  ì˜¤ë¥¸ìª½ì— ë¸”ëŸ­ì´ ìˆì„ ë•Œ
         {
             goLeft = false;
             if (rotate == false)
@@ -709,7 +707,7 @@ public:
 
             for (int j = 0; j <= 4; j++)
             {
-                if (Map[(BlockPos->Y) + j][(BlockPos->X) + LeftArray[j] - 1] != '1' && Map[(BlockPos->Y) + BottomArray[j] + 1][(BlockPos->X) + j] != '1') // ÇÑÄ­ ¿ŞÂÊ¿¡µµ ºí·°ÀÌ ¾ø°í ¾Æ·¡¿¡µµ ºí·°ÀÌ ¾øÀ¸¸é
+                if (Map[(BlockPos->Y) + j][(BlockPos->X) + LeftArray[j] - 1] != '1' && Map[(BlockPos->Y) + BottomArray[j] + 1][(BlockPos->X) + j] != '1') // í•œì¹¸ ì™¼ìª½ì—ë„ ë¸”ëŸ­ì´ ì—†ê³  ì•„ë˜ì—ë„ ë¸”ëŸ­ì´ ì—†ìœ¼ë©´
                     count++;
                 else
                 {
@@ -746,7 +744,7 @@ public:
 
             for (int i = 0; i <= 4; i++)
             {
-                if (Map[(BlockPos->Y) + i][(BlockPos->X) + LeftArray[i] - 1] != '1' && Map[(BlockPos->Y) + i][(BlockPos->X) + RightArray[i] + 1] != '1') // ÇÑÄ­ ¿ŞÂÊ¿¡µµ ºí·°ÀÌ ¾ø°í ¾Æ·¡¿¡µµ ºí·°ÀÌ ¾øÀ¸¸é
+                if (Map[(BlockPos->Y) + i][(BlockPos->X) + LeftArray[i] - 1] != '1' && Map[(BlockPos->Y) + i][(BlockPos->X) + RightArray[i] + 1] != '1') // í•œì¹¸ ì™¼ìª½ì—ë„ ë¸”ëŸ­ì´ ì—†ê³  ì•„ë˜ì—ë„ ë¸”ëŸ­ì´ ì—†ìœ¼ë©´
                     count++;
                 else
                 {
@@ -770,7 +768,7 @@ public:
 
         for (int i = 0; i <= 4; i++)
         {
-            if (Map[(BlockPos->Y) + i][(BlockPos->X) + LeftArray[i] - 1] == '1') // º® ¿ŞÂÊ¿¡ ºí·°ÀÌ ÀÖµû¸é;
+            if (Map[(BlockPos->Y) + i][(BlockPos->X) + LeftArray[i] - 1] == '1') // ë²½ ì™¼ìª½ì— ë¸”ëŸ­ì´ ìˆë”°ë©´;
             {
                 for (int j = 0; j <= 4; j++)
                 {
@@ -808,7 +806,7 @@ public:
 
         for (int i = 0; i <= 4; i++)
         {
-            if (Map[(BlockPos->Y) + i][(BlockPos->X) + RightArray[i] + 1] == '1') // º® ¿ŞÂÊ¿¡ ºí·°ÀÌ ÀÖµû¸é;
+            if (Map[(BlockPos->Y) + i][(BlockPos->X) + RightArray[i] + 1] == '1') // ë²½ ì™¼ìª½ì— ë¸”ëŸ­ì´ ìˆë”°ë©´;
             {
                 for (int j = 0; j <= 4; j++)
                 {
@@ -843,10 +841,10 @@ public:
                 }
             }
         }
-        ////////////////////////////////// ¿©±â±îÁö°¡ Á¶°Ç. ///////////////////
+        ////////////////////////////////// ì—¬ê¸°ê¹Œì§€ê°€ ì¡°ê±´. ///////////////////
 
 
-        if (rotate == true) // rotate°¡ °¡´É ÇÏ´Ù¸é temp_arrÀÇ ºí·Ï½¦ÀÌÇÁ¸¦ ±×´ë·Î ¿Å°ÜÁØ´Ù.
+        if (rotate == true) // rotateê°€ ê°€ëŠ¥ í•˜ë‹¤ë©´ temp_arrì˜ ë¸”ë¡ì‰ì´í”„ë¥¼ ê·¸ëŒ€ë¡œ ì˜®ê²¨ì¤€ë‹¤.
         {
             for (int i = 0; i < 5; i++)
             {
@@ -901,13 +899,13 @@ public:
         cout << "  ####    ##  ##   ##  ##   ######    ####      ##     ######   ##  ##  " << endl;
 
         gotoxy(33, 22);
-        cout << " ´ç½ÅÀÇ Á¡¼ö´Â " << *score << "Á¡ ÀÔ´Ï´Ù." << endl;
+        cout << " ë‹¹ì‹ ì˜ ì ìˆ˜ëŠ” " << *score << "ì  ì…ë‹ˆë‹¤." << endl;
 
 
         for (int i = 5; i > 0; --i)
         {
             gotoxy(37, 24);
-            cout << i << "ÃÊ ÈÄ Á¾·áÇÕ´Ï´Ù";
+            cout << i << "ì´ˆ í›„ ì¢…ë£Œí•©ë‹ˆë‹¤";
             Sleep(1000);
         }
     }
@@ -918,8 +916,8 @@ int Play(char Map[MAPHEIGHT][MAPWIDTH])
 {
 
     int Score = 0, BestScore = 0;
-    int BlockShape[5][5] = {}; //ºí·° 5x5
-    int NextBlock[5][5] = {}; //´ÙÀ½ ºí·°
+    int BlockShape[5][5] = {}; //ë¸”ëŸ­ 5x5
+    int NextBlock[5][5] = {}; //ë‹¤ìŒ ë¸”ëŸ­
     bool Bottom = false;
     bool noRotate = false;
     CMap map;
@@ -929,33 +927,33 @@ int Play(char Map[MAPHEIGHT][MAPWIDTH])
     map.InitMap(Map);
     map.DrawMap(Map);
     map.DrawSubMap(BestScore, Score);
-    PositionInit(&BlockPos); // À§Ä¡ ÃÊ±âÈ­
+    PositionInit(&BlockPos); // ìœ„ì¹˜ ì´ˆê¸°í™”
 
-    block.SetBlock(BlockShape); // ºí·° ¸ğ¾ç ¼³Á¤, È¸Àü °¡´É µµÇüÀÎÁö ¹İÈ¯
-    block.SetBlock(NextBlock); // ´ÙÀ½ºí·° ¸ğ¾ç ¼³Á¤
+    block.SetBlock(BlockShape); // ë¸”ëŸ­ ëª¨ì–‘ ì„¤ì •, íšŒì „ ê°€ëŠ¥ ë„í˜•ì¸ì§€ ë°˜í™˜
+    block.SetBlock(NextBlock); // ë‹¤ìŒë¸”ëŸ­ ëª¨ì–‘ ì„¤ì •
     block.DrawNextBlock(NextBlock);
 
     while (true)
     {
 
-        if (Bottom == true)  // ºí·ÏÀÇ ¿òÁ÷ÀÓÀÌ ³¡³ª¸é
+        if (Bottom == true)  // ë¸”ë¡ì˜ ì›€ì§ì„ì´ ëë‚˜ë©´
         {
             if (map.GameOverCheck(Map) == true)
             {
                 map.GameOver(&Score);
-                return 0; // while¹® Å»Ãâ
+                return 0; // whileë¬¸ íƒˆì¶œ
             }
 
-            map.CheckLine(Map, BlockPos, &Score); // ¶óÀÎ Ã¼Å©
-            PositionInit(&BlockPos); // Ä¿¼­ ÃÊ±âÈ­
+            map.CheckLine(Map, BlockPos, &Score); // ë¼ì¸ ì²´í¬
+            PositionInit(&BlockPos); // ì»¤ì„œ ì´ˆê¸°í™”
 
-            for (int i = 0; i < 5; i++)// blockÀ» ´ÙÀ½ ºí·° ¸ğ¾çÀ¸·Î °¡Á®¿À±â
+            for (int i = 0; i < 5; i++)// blockì„ ë‹¤ìŒ ë¸”ëŸ­ ëª¨ì–‘ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
                 for (int j = 0; j < 5; j++)
                     BlockShape[i][j] = NextBlock[i][j];
 
-            block.SetBlock(NextBlock); // ´ÙÀ½ ºí·° »õ·Î ¸¸µé±â
-            block.DrawNextBlock(NextBlock); //´ÙÀ½ ºí·° ¸ğ¾ç Map¿¡ Ãâ·Â
-            Bottom = false; // »õ·Î¿î ºí·ÏÀÇ ¿òÁ÷ÀÓÀ» À§ÇØ false·Î º¯È¯
+            block.SetBlock(NextBlock); // ë‹¤ìŒ ë¸”ëŸ­ ìƒˆë¡œ ë§Œë“¤ê¸°
+            block.DrawNextBlock(NextBlock); //ë‹¤ìŒ ë¸”ëŸ­ ëª¨ì–‘ Mapì— ì¶œë ¥
+            Bottom = false; // ìƒˆë¡œìš´ ë¸”ë¡ì˜ ì›€ì§ì„ì„ ìœ„í•´ falseë¡œ ë³€í™˜
         }
 
         map.OutputBlock(Map, BlockShape, BlockPos);
@@ -967,14 +965,14 @@ int Play(char Map[MAPHEIGHT][MAPWIDTH])
 
         if (Bottom == true) continue;
 
-        if (GetAsyncKeyState(VK_SPACE) & 0x8000) // Press 'Space' : ºí·Ï ÁÂÃø ÀÌµ¿
+        if (GetAsyncKeyState(VK_SPACE) & 0x8000) // Press 'Space' : ë¸”ë¡ ì¢Œì¸¡ ì´ë™
             if (noRotate == false)
                 map.Rotate(Map, BlockShape, &BlockPos);
 
-        if (GetAsyncKeyState('A') & 0x8000) // Press 'A' : ºí·Ï ÁÂÃø ÀÌµ¿
+        if (GetAsyncKeyState('A') & 0x8000) // Press 'A' : ë¸”ë¡ ì¢Œì¸¡ ì´ë™
             map.GoLeft(Map, BlockShape, &BlockPos);
 
-        if (GetAsyncKeyState('D') & 0x8000) // Press 'D' : ºí·Ï ÁÂÃø ÀÌµ¿
+        if (GetAsyncKeyState('D') & 0x8000) // Press 'D' : ë¸”ë¡ ì¢Œì¸¡ ì´ë™
             map.GoRight(Map, BlockShape, &BlockPos);
     }
     return 0;
@@ -982,17 +980,17 @@ int Play(char Map[MAPHEIGHT][MAPWIDTH])
 
 int main()
 {
-    char Map[MAPHEIGHT][MAPWIDTH] = {}; // ¸Ê ÁÂÇ¥ Á¦¾î¸¦ À§ÇÑ 2Â÷¿ø ¹è¿­ ¼±¾ğ
-    ConsoleInit(); // Ä¿¼­ ¼û±â±â ¹× ÄÜ¼ÖÃ¢ Å©±â ÃÊ±âÈ­ ÇÔ¼ö
+    char Map[MAPHEIGHT][MAPWIDTH] = {}; // ë§µ ì¢Œí‘œ ì œì–´ë¥¼ ìœ„í•œ 2ì°¨ì› ë°°ì—´ ì„ ì–¸
+    ConsoleInit(); // ì»¤ì„œ ìˆ¨ê¸°ê¸° ë° ì½˜ì†”ì°½ í¬ê¸° ì´ˆê¸°í™” í•¨ìˆ˜
 
     CMenu Menu;
-    int iInput = Menu.OutputMenu();// ±¸Á¶Ã¼, Switch-Case¹®À» ÅëÇÑ ¸Ş´º ¼±ÅÃÁö ÀÔ·Â
+    int iInput = Menu.OutputMenu();// êµ¬ì¡°ì²´, Switch-Caseë¬¸ì„ í†µí•œ ë©”ë‰´ ì„ íƒì§€ ì…ë ¥
 
     switch (iInput)
     {
     case MENU_START:
         system("cls");
-        Play(Map); // °ÔÀÓ ½ÃÀÛ
+        Play(Map); // ê²Œì„ ì‹œì‘
         break;
     case MENU_EXIT:
         system("cls");
